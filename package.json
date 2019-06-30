@@ -1,0 +1,36 @@
+{
+  "name": "shikimori-stat",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist",
+  "scripts": {
+    "start": "node dist",
+    "test": "tslint -c tslint.json \"src/**/*.ts\"",
+    "build": "npm run test && tsc"
+  },
+  "keywords": [],
+  "author": "Ivanik <ivan170102@gmail.com>",
+  "license": "AGPL-3.0-or-later",
+  "devDependencies": {
+    "@types/dotenv": "^6.1.0",
+    "@types/jest": "^24.0.15",
+    "@types/koa": "^2.0.48",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-router": "^7.0.42",
+    "@types/node": "^11.13.15",
+    "@types/node-fetch": "^2.3.7",
+    "node-fetch": "^2.6.0",
+    "prettier": "^1.18.2",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "tslint-config-airbnb-base": "^0.3.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.2"
+  },
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "pureimage": "^0.1.6"
+  }
+}
