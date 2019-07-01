@@ -113,6 +113,7 @@ router.get("/stat", async (ctx, next) => {
     }
   }
   ctx.response.status = 200;
+  ctx.type = "image/png";
   await pureimage.encodePNGToStream(img, ctx.res);
   console.log(
     `user: ${ctx.query.user} history: ${
