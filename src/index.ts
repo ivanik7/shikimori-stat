@@ -63,24 +63,24 @@ router.get("/stat", async (ctx, next) => {
   const blankColor = hexToRgb(ctx.query.blankcolor);
   const textColor = hexToRgb(ctx.query.textcolor);
 
-  const img = pureimage.make(860, 130);
+  const img = pureimage.make(875, 128);
 
   const imgc = img.getContext("2d");
 
-  const offsetX = 24;
+  const offsetX = 20;
   const offsetY = 16;
 
-  ctx.font = "16px roboto";
+  imgc.font = "12zpt roboto";
   imgc.fillStyle = `rgba(${textColor.red},${textColor.green},${textColor.blue}, 1)`;
   imgc.fillText("ПН", 0, 28);
-  imgc.fillText("ЧТ", 0, 72);
-  imgc.fillText("СБ", 0, 112);
+  imgc.fillText("ЧТ", 0, 76);
+  imgc.fillText("СБ", 0, 124);
 
-  let lastMon = 0;
-  for (let week = 0; week < 52; week++) {
+  let lastMon = -1;
+  for (let week = 51; week >= 0; week--) {
     const mount = new Date();
     mount.setDate(mount.getDate() - week * 7);
-    if (mount.getMonth() !== lastMon) {
+    if (mount.getMonth() !== lastMon || lastMon === -1) {
       lastMon = mount.getMonth();
       imgc.fillStyle = `rgba(${textColor.red},${textColor.green},${textColor.blue}, 1)`;
       imgc.fillText(`${monthNames[lastMon]}`, 816 - week * 16 + offsetX, 10);
@@ -88,7 +88,7 @@ router.get("/stat", async (ctx, next) => {
 
     for (let day = 0; day < 7; day++) {
       const date = new Date();
-      date.setDate(date.getDate() - (week * 7 + day));
+      date.setDate(date.getDate() - (week * 7 + (date.getDay() - day) - 1));
       date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
@@ -104,12 +104,7 @@ router.get("/stat", async (ctx, next) => {
         imgc.fillStyle = rgbToHex(blankColor);
       }
       if (date <= new Date()) {
-        imgc.fillRect(
-          816 - week * 16 + offsetX,
-          96 - day * 16 + offsetY,
-          12,
-          12
-        );
+        imgc.fillRect(816 - week * 16 + offsetX, day * 16 + offsetY, 12, 12);
       }
     }
   }
