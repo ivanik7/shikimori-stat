@@ -61,6 +61,7 @@ router.get("/stat", async (ctx, next) => {
   const minColor = hexToRgb(ctx.query.mincolor);
   const maxColor = hexToRgb(ctx.query.maxcolor);
   const blankColor = hexToRgb(ctx.query.blankcolor);
+  const textColor = hexToRgb(ctx.query.textcolor);
 
   const img = pureimage.make(860, 130);
 
@@ -70,7 +71,7 @@ router.get("/stat", async (ctx, next) => {
   const offsetY = 16;
 
   ctx.font = "16px roboto";
-  imgc.fillStyle = `rgba(0,0,0, 1)`;
+  imgc.fillStyle = `rgba(${textColor.red},${textColor.green},${textColor.blue}, 1)`;
   imgc.fillText("ПН", 0, 28);
   imgc.fillText("ЧТ", 0, 72);
   imgc.fillText("СБ", 0, 112);
@@ -81,7 +82,7 @@ router.get("/stat", async (ctx, next) => {
     mount.setDate(mount.getDate() - week * 7);
     if (mount.getMonth() !== lastMon) {
       lastMon = mount.getMonth();
-      imgc.fillStyle = `rgba(0,0,0, 1)`;
+      imgc.fillStyle = `rgba(${textColor.red},${textColor.green},${textColor.blue}, 1)`;
       imgc.fillText(`${monthNames[lastMon]}`, 816 - week * 16 + offsetX, 10);
     }
 
