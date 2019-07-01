@@ -121,6 +121,13 @@ router.get("/stat", async (ctx, next) => {
   );
 });
 
+app.use(async (ctx, next) => {
+  for (const key of Object.keys(ctx.query)) {
+    ctx.query[key.replace("amp;", "")] = ctx.query[key];
+  }
+  await next();
+});
+
 app.use(router.routes());
 
 font.load(() => app.listen(8080, () => console.log("started")));
