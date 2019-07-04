@@ -35,10 +35,19 @@ router.get("/stat", async (ctx, next) => {
     date.setMinutes(0);
     date.setSeconds(0);
     date.setMilliseconds(0);
-    if (dates[date.toISOString()]) {
-      dates[date.toISOString()] = dates[date.toISOString()] + 1;
-    } else {
-      dates[date.toISOString()] = 1;
+    if (e.description.search(/просмо/i) !== -1) {
+      let count = 1;
+      if (e.description.search(/эпизода|эпизодов/i) !== -1) {
+        const match = e.description.match(/\d+/);
+        count = match[0];
+      } else if (e.description.search(/эпизоды/i) !== -1) {
+        count = e.description.match(/\d+/g).length;
+      }
+      if (dates[date.toISOString()]) {
+        dates[date.toISOString()] = dates[date.toISOString()] + count;
+      } else {
+        dates[date.toISOString()] = count;
+      }
     }
   }
 
