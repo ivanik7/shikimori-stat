@@ -1,9 +1,9 @@
 import fetch from "node-fetch";
 
-export default async (userId: number) => {
+export default async (userId: number, first: boolean) => {
   const result = [];
   let json = [];
-  let page = 1;
+  let page = first ? 1 : 2;
 
   const year = new Date();
   year.setFullYear(year.getFullYear() - 1);
@@ -16,9 +16,11 @@ export default async (userId: number) => {
     );
 
     json = await response.json();
+
     result.push(...json);
     page++;
   } while (
+    !first &&
     json.length >= 100 &&
     new Date(result[result.length - 1].created_at) > year
   );
