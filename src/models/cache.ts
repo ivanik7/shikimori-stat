@@ -31,16 +31,6 @@ cache.statics.search = async function search(
   return;
 };
 
-cache.statics.save = function save(
-  user: number,
-  latest: Date,
-  color: { min: string; max: string; blank: string; text: string }
-): string {
-  const req = new this({ user, latest, color });
-  req.save();
-  return req.file;
-};
-
 cache.statics.clean = async function clean(): Promise<void> {
   const expiration = new Date();
   expiration.setHours(expiration.getHours() - cacheExplained);
@@ -71,11 +61,6 @@ interface IcacheModel extends mongoose.Model<IcacheDocument> {
     latest: Date,
     color: { min: string; max: string; blank: string; text: string }
   ): Promise<string | undefined>;
-  save(
-    user: number,
-    latest: Date,
-    color: { min: string; max: string; blank: string; text: string }
-  ): string;
   clean(): Promise<void>;
 }
 

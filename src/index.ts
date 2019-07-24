@@ -25,6 +25,12 @@ const app = new koa();
 const router = new koaRouter();
 const font = pureimage.registerFont("./fonts/roboto.ttf", "roboto");
 
+try {
+  fs.mkdirSync("./cache");
+} catch (error) {
+  console.log(`Дириктория cache уже есть`);
+}
+
 cache.clean();
 
 setInterval(() => {
