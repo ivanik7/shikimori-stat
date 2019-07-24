@@ -2,6 +2,15 @@
 
 Генератор картинок со статистикой [Shikimori](https://shikimori.one/)
 
+[![Build Status](https://travis-ci.org/ivanik7/shikimori-stat.svg?branch=master)](https://travis-ci.org/ivanik7/shikimori-stat)
+[![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m783154352-0460d400bd7a20fe3d858b04.svg)](https://status.ivanik.ru)
+
+## Пример
+
+Пример статистики моего аккаунта
+
+[![Статистика](https://ivanik.ru/shikimori-stat?user=428722&blankcolor=ebedf0&mincolor=c6e48b&maxcolor=196127&textcolor=000000)](https://shikimori.one/ivanik)
+
 ## Запрос картинки
 
 Картинку можно получить по ссылке
