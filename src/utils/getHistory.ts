@@ -18,7 +18,7 @@ export default async (userId: number, first: boolean) => {
     json = await response.json();
 
     result.push(...json);
-    page++;
+    page += 1;
   } while (
     !first &&
     json.length >= 100 &&

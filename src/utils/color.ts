@@ -30,14 +30,11 @@ export const hexToRgb = (hex: string): Icolor => {
 
 const componentToHex = c => {
   const hex = c.toString(16);
-  return hex.length === 1 ? "0" + hex : hex;
+  return hex.length === 1 ? `0${hex}` : hex;
 };
 
 export const rgbToHex = (color: Icolor) => {
-  return (
-    "#" +
-    componentToHex(color.red) +
-    componentToHex(color.green) +
-    componentToHex(color.blue)
-  );
+  return `#${componentToHex(color.red)}${componentToHex(
+    color.green
+  )}${componentToHex(color.blue)}`;
 };

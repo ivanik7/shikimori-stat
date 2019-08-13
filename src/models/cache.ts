@@ -23,12 +23,12 @@ cache.statics.search = async function search(
   user: number,
   latest: Date,
   color: { min: string; max: string; blank: string; text: string }
-): Promise<string | undefined> {
+): Promise<string | Promise<undefined>> {
   const result = await this.findOne({ user, latest, color });
   if (result) {
     return result.file;
   }
-  return;
+  return undefined;
 };
 
 cache.statics.clean = async function clean(): Promise<void> {

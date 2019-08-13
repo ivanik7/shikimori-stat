@@ -1,10 +1,10 @@
 import fs from "fs";
-import koa from "koa";
-import koaRouter from "koa-router";
+import Koa from "koa";
+import KoaRouter from "koa-router";
 import pureimage from "pureimage";
 import { hexToRgb, rgbToHex, gradient } from "./utils/color";
 import getHistory from "./utils/getHistory";
-import cache from "./models/cache";
+import Cache from "./models/cache";
 
 const monthNames = [
   "Янв",
@@ -21,8 +21,8 @@ const monthNames = [
   "Дек"
 ];
 
-const app = new koa();
-const router = new koaRouter();
+const app = new Koa();
+const router = new KoaRouter();
 const font = pureimage.registerFont("./fonts/roboto.ttf", "roboto");
 
 try {
@@ -31,23 +31,23 @@ try {
   console.log(`Дириктория cache уже есть`);
 }
 
-cache.clean();
+Cache.clean();
 
 setInterval(() => {
   try {
-    cache.clean();
+    Cache.clean();
   } catch (error) {
     console.log(error.message);
   }
 }, 3 * 60 * 1000);
 
-router.get("/stat", async (ctx, next) => {
+router.get("/stat", async ctx => {
   const startTime = new Date();
 
   const dates = {};
 
   const history = await getHistory(ctx.query.user, true);
-  const filename = await cache.search(
+  const filename = await Cache.search(
     ctx.query.user,
     new Date(history[0].created_at),
     {
@@ -84,7 +84,7 @@ router.get("/stat", async (ctx, next) => {
         let count = 1;
         if (e.description.search(/эпизода|эпизодов/i) !== -1) {
           const match = e.description.match(/\d+/);
-          count = match[0];
+          [count] = match;
         } else if (e.description.search(/эпизоды/i) !== -1) {
           count = e.description.match(/\d+/g).length;
         }
@@ -100,13 +100,13 @@ router.get("/stat", async (ctx, next) => {
     let summ = 0;
     let length = 0;
     for (const key in dates) {
-      if (dates.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(dates, key)) {
         const e = dates[key];
         if (e > max) {
           max = e;
         }
-        summ = summ + e;
-        length++;
+        summ += e;
+        length += 1;
       }
     }
     const mid = summ / length;
@@ -126,7 +126,7 @@ router.get("/stat", async (ctx, next) => {
     imgc.fillText("СБ", 0, 124);
 
     let lastMon = -1;
-    for (let week = 51; week >= 0; week--) {
+    for (let week = 51; week >= 0; week -= 1) {
       const mount = new Date();
       mount.setDate(mount.getDate() - week * 7);
       if (mount.getMonth() !== lastMon || lastMon === -1) {
@@ -135,7 +135,7 @@ router.get("/stat", async (ctx, next) => {
         imgc.fillText(`${monthNames[lastMon]}`, 816 - week * 16 + offsetX, 10);
       }
 
-      for (let day = 0; day < 7; day++) {
+      for (let day = 0; day < 7; day += 1) {
         const date = new Date();
         date.setDate(date.getDate() - (week * 7 + (date.getDay() - day) - 1));
         date.setHours(0);
@@ -161,7 +161,7 @@ router.get("/stat", async (ctx, next) => {
     ctx.type = "image/png";
     await pureimage.encodePNGToStream(img, ctx.res);
 
-    const ct = new cache({
+    const ct = new Cache({
       user: ctx.query.user,
       latest: new Date(history[0].created_at),
       color: {
@@ -190,6 +190,7 @@ app.use(async (ctx, next) => {
   for (const key of Object.keys(ctx.query)) {
     ctx.query[key.replace("amp;", "")] = ctx.query[key];
   }
+  console.log(ctx.path);
   await next();
 });
 
