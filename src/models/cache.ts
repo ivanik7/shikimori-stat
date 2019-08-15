@@ -8,6 +8,7 @@ const unlink = promisify(fs.unlink);
 
 const cache = new mongoose.Schema({
   user: Number,
+  type: { type: String, enum: ["png", "svg"] },
   latest: Date,
   date: { type: Date, default: Date.now },
   file: { type: String, unique: true, default: uuid },
@@ -21,10 +22,11 @@ const cache = new mongoose.Schema({
 
 cache.statics.search = async function search(
   user: number,
+  type: string,
   latest: Date,
   color: { min: string; max: string; blank: string; text: string }
 ): Promise<string | Promise<undefined>> {
-  const result = await this.findOne({ user, latest, color });
+  const result = await this.findOne({ user, type, latest, color });
   if (result) {
     return result.file;
   }
@@ -44,6 +46,7 @@ cache.statics.clean = async function clean(): Promise<void> {
 
 interface IcacheDocument extends mongoose.Document {
   user: number;
+  type: string;
   latest: Date;
   date: Date;
   file: string;
@@ -58,6 +61,7 @@ interface IcacheDocument extends mongoose.Document {
 interface IcacheModel extends mongoose.Model<IcacheDocument> {
   search(
     user: number,
+    type: string,
     latest: Date,
     color: { min: string; max: string; blank: string; text: string }
   ): Promise<string | undefined>;

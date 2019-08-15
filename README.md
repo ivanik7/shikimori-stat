@@ -9,20 +9,21 @@
 
 Пример статистики моего аккаунта
 
-[![Статистика](https://ivanik.ru/shikimori-stat?user=428722&blankcolor=ebedf0&mincolor=c6e48b&maxcolor=196127&textcolor=000000)](https://shikimori.one/ivanik)
+[![Статистика](https://ivanik.ru/shikimori/stat.svg?user=428722&blankcolor=ebedf0&mincolor=c6e48b&maxcolor=196127&textcolor=000000)](https://shikimori.one/ivanik)
 
 ## Запрос картинки
 
 Картинку можно получить по ссылке
 
 ```
-https://ivanik.ru/shikimori-stat?user=428722&blankcolor=434343&mincolor=245652&maxcolor=009688&textcolor=ffffff
+https://ivanik.ru/shikimori/stat.svg?user=428722&blankcolor=434343&mincolor=245652&maxcolor=009688&textcolor=ffffff
 ```
 
 Параметры:
 
 | Параметр     | Значение                                |
 | ------------ | --------------------------------------- |
+| `type`       | Тип картинки. SVG или PNG               |
 | `user`       | ID пользователя                         |
 | `blankcolor` | Цвет пустых клеток                      |
 | `mincolor`   | Цвет клеток при минимальной активности  |

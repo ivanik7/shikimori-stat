@@ -41,14 +41,23 @@ setInterval(() => {
   }
 }, 3 * 60 * 1000);
 
-router.get("/stat", async ctx => {
+router.get(["/stat", "/stat.:type"], async ctx => {
   const startTime = new Date();
 
+  const type = ctx.params.type ? ctx.params.type : "png";
+
+  ctx.response.status = 200;
+  if (type === "png") {
+    ctx.type = "image/png";
+  } else if (type === "svg") {
+    ctx.type = "image/svg+xml";
+  }
   const dates = {};
 
   const history = await getHistory(ctx.query.user, true);
   const filename = await Cache.search(
     ctx.query.user,
+    type,
     new Date(history[0].created_at),
     {
       min: ctx.query.mincolor,
@@ -58,9 +67,7 @@ router.get("/stat", async ctx => {
     }
   );
   if (filename) {
-    ctx.response.status = 200;
-    ctx.type = "image/png";
-    ctx.body = fs.createReadStream(`./cache/${filename}.png`);
+    ctx.body = fs.createReadStream(`./cache/${filename}.${type}`);
 
     console.log(
       `user: ${ctx.query.user} from cache time: ${new Date().getTime() -
@@ -112,7 +119,11 @@ router.get("/stat", async ctx => {
     const mid = summ / length;
     const maxPers = mid * 2 > max ? max : mid * 2;
 
-    const img = canvas.createCanvas(875, 128);
+    const img = canvas.createCanvas(
+      875,
+      128,
+      type === "svg" ? "svg" : undefined
+    );
 
     const imgc = img.getContext("2d");
 
@@ -160,6 +171,7 @@ router.get("/stat", async ctx => {
 
     const ct = new Cache({
       user: ctx.query.user,
+      type,
       latest: new Date(history[0].created_at),
       color: {
         min: ctx.query.mincolor,
@@ -169,12 +181,17 @@ router.get("/stat", async ctx => {
       }
     });
 
-    ctx.response.status = 200;
-    ctx.type = "image/png";
-
-    const stream = img.createPNGStream();
-    ctx.body = stream;
-    stream.pipe(fs.createWriteStream(`./cache/${ct.file}.png`));
+    if (type === "png") {
+      const stream = img.createPNGStream();
+      ctx.body = stream;
+      stream.pipe(fs.createWriteStream(`./cache/${ct.file}.${type}`));
+    } else if (type === "svg") {
+      const buffer = img.toBuffer();
+      ctx.body = buffer;
+      fs.writeFile(`./cache/${ct.file}.${type}`, buffer, err => {
+        if (err) console.log(err);
+      });
+    }
 
     ct.save();
 
