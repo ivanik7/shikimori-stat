@@ -1,7 +1,7 @@
 import fs from "fs";
 import Koa from "koa";
 import KoaRouter from "koa-router";
-import pureimage from "pureimage";
+import canvas from "canvas";
 import { hexToRgb, rgbToHex, gradient } from "./utils/color";
 import getHistory from "./utils/getHistory";
 import Cache from "./models/cache";
@@ -23,7 +23,7 @@ const monthNames = [
 
 const app = new Koa();
 const router = new KoaRouter();
-const font = pureimage.registerFont("./fonts/roboto.ttf", "roboto");
+canvas.registerFont("./fonts/roboto.ttf", { family: "Roboto" });
 
 try {
   fs.mkdirSync("./cache");
@@ -112,14 +112,14 @@ router.get("/stat", async ctx => {
     const mid = summ / length;
     const maxPers = mid * 2 > max ? max : mid * 2;
 
-    const img = pureimage.make(875, 128);
+    const img = canvas.createCanvas(875, 128);
 
     const imgc = img.getContext("2d");
 
     const offsetX = 20;
     const offsetY = 16;
 
-    imgc.font = "12zpt roboto";
+    imgc.font = "12zpt Roboto";
     imgc.fillStyle = `rgba(${textColor.red},${textColor.green},${textColor.blue}, 1)`;
     imgc.fillText("ПН", 0, 28);
     imgc.fillText("ЧТ", 0, 76);
@@ -157,9 +157,6 @@ router.get("/stat", async ctx => {
         }
       }
     }
-    ctx.response.status = 200;
-    ctx.type = "image/png";
-    await pureimage.encodePNGToStream(img, ctx.res);
 
     const ct = new Cache({
       user: ctx.query.user,
@@ -172,11 +169,14 @@ router.get("/stat", async ctx => {
       }
     });
 
-    await pureimage.encodePNGToStream(
-      img,
-      fs.createWriteStream(`./cache/${ct.file}.png`)
-    );
-    await ct.save();
+    ctx.response.status = 200;
+    ctx.type = "image/png";
+
+    const stream = img.createPNGStream();
+    ctx.body = stream;
+    stream.pipe(fs.createWriteStream(`./cache/${ct.file}.png`));
+
+    ct.save();
 
     console.log(
       `user: ${ctx.query.user} history: ${
@@ -196,4 +196,4 @@ app.use(async (ctx, next) => {
 
 app.use(router.routes());
 
-font.load(() => app.listen(8080, () => console.log("started")));
+app.listen(8080, () => console.log("started"));
