@@ -9,9 +9,9 @@ export default async (userId: number, first: boolean) => {
   year.setFullYear(year.getFullYear() - 1);
   do {
     const response = await fetch(
-      `https://shikimori.one//api/users/${userId}/history?limit=100&page=${page}`,
+      `https://shikimori.one/api/users/${userId}/history?limit=100&page=${page}`,
       {
-        headers: { "User-Agent": "test" }
+        headers: { "User-Agent": "test" },
       }
     );
 

@@ -9,7 +9,7 @@
 
 Пример статистики моего аккаунта
 
-[![Статистика](https://ivanik.ru/shikimori/stat.svg?user=428722&blankcolor=ebedf0&mincolor=c6e48b&maxcolor=196127&textcolor=000000)](https://shikimori.one/ivanik)
+[![Статистика](https://mgn.ivanik.ru/shikimori/stat.svg?user=428722&blankcolor=ebedf0&mincolor=c6e48b&maxcolor=196127&textcolor=000000)](https://shikimori.one/ivanik)
 
 ## Запрос картинки
 
