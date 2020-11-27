@@ -5,11 +5,10 @@
     "target": "es6",
     "noImplicitAny": false,
     "moduleResolution": "node",
-    "resolveJsonModule": true,
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": "."
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "*.test.ts"]
+  "exclude": ["node_modules"]
 }
