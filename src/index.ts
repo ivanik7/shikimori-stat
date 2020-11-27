@@ -66,15 +66,27 @@ router.get(["/stat", "/stat.:type"], async ctx => {
       text: ctx.query.textcolor
     }
   );
-  if (filename) {
-    ctx.body = fs.createReadStream(`./cache/${filename}.${type}`);
 
-    console.log(
-      `user: ${ctx.query.user} from cache time: ${
-        new Date().getTime() - startTime.getTime()
-      }`
-    );
-  } else {
+  let loadedFromCache = false;
+  if (filename) {
+    try {
+      await fs.promises.access(
+        `./cache/${filename}.${type}`,
+        fs.constants.F_OK
+      );
+      ctx.body = fs.createReadStream(`./cache/${filename}.${type}`);
+      console.log(
+        `user: ${ctx.query.user} from cache time: ${
+          new Date().getTime() - startTime.getTime()
+        }`
+      );
+      loadedFromCache = true;
+    } catch (error) {
+      Cache.deleteOne({ file: filename });
+      console.log(`file not found - ${filename}`);
+    }
+  }
+  if (!loadedFromCache) {
     const minColor = hexToRgb(ctx.query.mincolor);
     const maxColor = hexToRgb(ctx.query.maxcolor);
     const blankColor = hexToRgb(ctx.query.blankcolor);
