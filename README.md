@@ -2,21 +2,20 @@
 
 Генератор картинок со статистикой [Shikimori](https://shikimori.one/)
 
-[![Build Status](https://travis-ci.org/ivanik7/shikimori-stat.svg?branch=master)](https://travis-ci.org/ivanik7/shikimori-stat)
-[![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m783154352-0460d400bd7a20fe3d858b04.svg)](https://status.ivanik.ru)
+[![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m785423966-e1625adaf4cb6d8f512c6ddb.svg)](https://status.ivanik.ru)
 
 ## Пример
 
 Пример статистики моего аккаунта
 
-[![Статистика](https://mgn.ivanik.ru/shikimori/stat.svg?user=428722&blankcolor=ebedf0&mincolor=c6e48b&maxcolor=196127&textcolor=000000)](https://shikimori.one/ivanik)
+[![Статистика](https://big.ivanik.ru/shikimori/stat.svg?user=428722&blankcolor=ebedf0&mincolor=c6e48b&maxcolor=196127&textcolor=000000)](https://shikimori.one/ivanik)
 
 ## Запрос картинки
 
 Картинку можно получить по ссылке
 
 ```
-https://ivanik.ru/shikimori/stat.svg?user=428722&blankcolor=434343&mincolor=245652&maxcolor=009688&textcolor=ffffff
+https://big.ivanik.ru/shikimori/stat.svg?user=428722&blankcolor=434343&mincolor=245652&maxcolor=009688&textcolor=ffffff
 ```
 
 Параметры:
@@ -59,6 +58,6 @@ ID пользователя можно получить из ссылки на �
 Например в этой ссылке ID 428722.
 
 ```
-https://moe.shikimori.one/system/users/x160/428722.png?1551451910
+https://moe.shikimori.one/system/users/x160/428722.png
                                             ^^^^^^
 ```
