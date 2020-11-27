@@ -70,8 +70,9 @@ router.get(["/stat", "/stat.:type"], async ctx => {
     ctx.body = fs.createReadStream(`./cache/${filename}.${type}`);
 
     console.log(
-      `user: ${ctx.query.user} from cache time: ${new Date().getTime() -
-        startTime.getTime()}`
+      `user: ${ctx.query.user} from cache time: ${
+        new Date().getTime() - startTime.getTime()
+      }`
     );
   } else {
     const minColor = hexToRgb(ctx.query.mincolor);

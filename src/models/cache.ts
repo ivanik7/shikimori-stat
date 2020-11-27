@@ -1,4 +1,4 @@
-import uuid from "uuid/v4";
+import { v4 as uuid } from "uuid";
 import fs from "fs";
 import { promisify } from "util";
 import mongoose from "../utils/mongoose";
@@ -38,8 +38,12 @@ cache.statics.clean = async function clean(): Promise<void> {
   expiration.setHours(expiration.getHours() - cacheExplained);
   const result = await this.find({ date: { $lt: expiration } });
   for (const element of result) {
-    await unlink(`./cache/${element.file}.png`);
     await this.deleteOne(element);
+    try {
+      await unlink(`./cache/${element.file}.${element.type}`);
+    } catch (error) {
+      console.log(`Ошибка удаления файла ${error.message}`);
+    }
     console.log(`rm ${element.user}`);
   }
 };
