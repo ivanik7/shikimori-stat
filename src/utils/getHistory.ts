@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch from "node-fetch-commonjs";
 
 export default async (userId: number, first: boolean) => {
   const result = [];
@@ -11,11 +11,13 @@ export default async (userId: number, first: boolean) => {
     const response = await fetch(
       `https://shikimori.one/api/users/${userId}/history?limit=100&page=${page}`,
       {
-        headers: { "User-Agent": "test" },
+        headers: {
+          "User-Agent": "shikimori-stat (https://shikimori-stat.ivanik.ru)"
+        }
       }
     );
 
-    json = await response.json();
+    json = (await response.json()) as [any];
 
     result.push(...json);
     page += 1;
@@ -24,5 +26,8 @@ export default async (userId: number, first: boolean) => {
     json.length >= 100 &&
     new Date(result[result.length - 1].created_at) > year
   );
+
+  console.log(result);
+
   return result;
 };

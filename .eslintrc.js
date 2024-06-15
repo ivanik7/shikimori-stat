@@ -16,6 +16,8 @@ module.exports = {
       "WithStatement",
       "BinaryExpression[operator='in']"
     ],
+    "no-useless-constructor": "off",
+    "no-empty-function": "off",
     "no-await-in-loop": "off",
     "no-continue": "off",
     "no-unused-vars": "off",

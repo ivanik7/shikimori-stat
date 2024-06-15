@@ -2,7 +2,7 @@
   "name": "shikimori-stat",
   "version": "0.0.1",
   "description": "",
-  "main": "dist",
+  "module": "dist/index.js",
   "scripts": {
     "start": "node dist",
     "test": "eslint src/**/*.ts",
@@ -20,29 +20,24 @@
     "@types/koa": "^2.11.6",
     "@types/koa-bodyparser": "^4.3.0",
     "@types/koa-router": "^7.4.1",
-    "@types/mongoose": "^5.10.1",
     "@types/node": "^14.14.10",
-    "@types/node-fetch": "^2.5.7",
-    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
-    "prettier": "^2.2.0",
-    "ts-node": "^9.0.0",
     "eslint": "^7.14.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.1.4",
-    "typescript": "^4.1.2"
+    "prettier": "^2.2.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
-    "canvas": "^2.6.1",
-    "dotenv": "^8.2.0",
+    "canvas": "^2.11.2",
+    "dotenv": "^16.4.5",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^10.0.0",
-    "mongoose": "^5.10.16",
-    "node-fetch": "^2.6.1",
-    "uuid": "^8.3.1"
+    "node-fetch-commonjs": "^3.3.2"
   }
 }
