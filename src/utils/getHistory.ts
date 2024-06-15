@@ -1,5 +1,3 @@
-import fetch from "node-fetch-commonjs";
-
 export default async (userId: number, first: boolean) => {
   const result = [];
   let json = [];
@@ -26,8 +24,6 @@ export default async (userId: number, first: boolean) => {
     json.length >= 100 &&
     new Date(result[result.length - 1].created_at) > year
   );
-
-  console.log(result);
 
   return result;
 };

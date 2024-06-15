@@ -20,6 +20,7 @@ module.exports = {
     "no-empty-function": "off",
     "no-await-in-loop": "off",
     "no-continue": "off",
+    "no-console": "off",
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
