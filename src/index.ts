@@ -5,6 +5,7 @@ import canvas from "canvas";
 import { hexToRgb, rgbToHex, gradient } from "./utils/color";
 import getHistory from "./utils/getHistory";
 import * as cache from "./utils/cache";
+import cors from "@koa/cors";
 
 const monthNames = [
   "Янв",
@@ -48,7 +49,11 @@ router.get(["/stat", "/stat.:type"], async ctx => {
 
   ctx.response.status = 200;
 
-  if (type !== "png" && type !== "svg") {
+  if (type === "png") {
+    ctx.type = "image/png";
+  } else if (type === "svg") {
+    ctx.type = "image/svg+xml";
+  } else {
     ctx.response.status = 400;
     ctx.body = "Bad request";
 
@@ -182,14 +187,12 @@ router.get(["/stat", "/stat.:type"], async ctx => {
   if (type === "png") {
     const stream = img.createPNGStream();
 
-    ctx.type = "image/png";
     ctx.body = stream;
 
     stream.pipe(cache.setStream(cacheKey));
   } else if (type === "svg") {
     const buffer = img.toBuffer();
 
-    ctx.type = "image/svg+xml";
     ctx.body = buffer;
 
     cache.setBuffer(cacheKey, buffer);
@@ -212,6 +215,7 @@ app.use(async (ctx, next) => {
   await next();
 });
 
+app.use(cors());
 app.use(router.routes());
 
 app.listen(8080, () => console.log("started"));

@@ -33,6 +33,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@koa/cors": "^5.0.0",
     "canvas": "^2.11.2",
     "dotenv": "^16.4.5",
     "koa": "^2.13.0",
