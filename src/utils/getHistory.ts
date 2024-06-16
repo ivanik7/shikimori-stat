@@ -1,4 +1,4 @@
-export default async (userId: number, first: boolean) => {
+export default async (userId: string, first: boolean) => {
   const result = [];
   let json = [];
   let page = first ? 1 : 2;

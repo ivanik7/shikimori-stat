@@ -6,7 +6,7 @@ import { cacheTtlDays, cacheMaxFiles, cachePath } from "./config";
 
 export class Cache {
   constructor(
-    public user: Number,
+    public user: string,
     public type: "png" | "svg",
     public latestHistoryItem: Date,
     public minColor: String,

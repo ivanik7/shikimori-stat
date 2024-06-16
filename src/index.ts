@@ -44,8 +44,6 @@ setInterval(() => {
 router.get(["/stat", "/stat.:type"], async ctx => {
   const startTime = new Date();
 
-  const userId = parseInt(ctx.query.user as string, 10);
-
   const type = ctx.params.type ? ctx.params.type : "png";
 
   ctx.response.status = 200;
@@ -59,10 +57,10 @@ router.get(["/stat", "/stat.:type"], async ctx => {
 
   const dates = {};
 
-  const history = await getHistory(userId, true);
+  const history = await getHistory(ctx.query.user as string, true);
 
   const cacheKey = new cache.Cache(
-    userId,
+    ctx.query.user as string,
     type,
     new Date(history[0].created_at),
     ctx.query.mincolor as string,
@@ -89,7 +87,7 @@ router.get(["/stat", "/stat.:type"], async ctx => {
   const blankColor = hexToRgb(ctx.query.blankcolor as string);
   const textColor = hexToRgb(ctx.query.textcolor as string);
 
-  history.push(...(await getHistory(userId, false)));
+  history.push(...(await getHistory(ctx.query.user as string, false)));
 
   for (const e of history) {
     const date = new Date(e.created_at);
