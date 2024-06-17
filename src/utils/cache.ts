@@ -8,6 +8,7 @@ export class Cache {
   constructor(
     public user: string,
     public type: "png" | "svg",
+    public date: Date,
     public latestHistoryItem: Date,
     public minColor: String,
     public maxColor: String,

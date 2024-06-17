@@ -15,9 +15,16 @@ export default async (userId: string, first: boolean) => {
       }
     );
 
-    json = (await response.json()) as [any];
+    const res = await response.json();
 
-    result.push(...json);
+    if (!Array.isArray(res)) {
+      console.log(res);
+      break;
+    }
+
+    json = res;
+
+    result.push(...res);
     page += 1;
   } while (
     !first &&

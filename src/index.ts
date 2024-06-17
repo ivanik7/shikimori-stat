@@ -2,10 +2,10 @@ import fs from "fs";
 import Koa from "koa";
 import KoaRouter from "koa-router";
 import canvas from "canvas";
+import cors from "@koa/cors";
 import { hexToRgb, rgbToHex, gradient } from "./utils/color";
 import getHistory from "./utils/getHistory";
 import * as cache from "./utils/cache";
-import cors from "@koa/cors";
 
 const monthNames = [
   "Янв",
@@ -64,10 +64,14 @@ router.get(["/stat", "/stat.:type"], async ctx => {
 
   const history = await getHistory(ctx.query.user as string, true);
 
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+
   const cacheKey = new cache.Cache(
     ctx.query.user as string,
     type,
-    new Date(history[0].created_at),
+    currentDate,
+    history.length > 0 ? new Date(history[0].created_at) : undefined,
     ctx.query.mincolor as string,
     ctx.query.maxcolor as string,
     ctx.query.blankcolor as string,
