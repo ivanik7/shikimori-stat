@@ -1,35 +1,40 @@
 # shikimori-stat
 
-Генератор картинок со статистикой [Shikimori](https://shikimori.one/)
+**[shikimori-stat.ivanik.ru](https://shikimori-stat.ivanik.ru/)**
 
-[![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m785423966-e1625adaf4cb6d8f512c6ddb.svg)](https://status.ivanik.ru)
+Генератор картинок со статистикой [Shikimori](https://shikimori.one/)
 
 ## Пример
 
 Пример статистики моего аккаунта
 
-[![Статистика](https://big.ivanik.ru/shikimori/stat.svg?user=428722&blankcolor=ebedf0&mincolor=c6e48b&maxcolor=196127&textcolor=000000)](https://shikimori.one/ivanik)
+[![Статистика](https://shikimori-stat-api.ivanik.ru/stat.svg?user=ivanik&blankcolor=bebebe&mincolor=79a9cf&maxcolor=79a9cf&textcolor=000000)](https://shikimori.one/ivanik)
 
-## Запрос картинки
+## Запрос картинки вручную
 
-Картинку можно получить по ссылке
+Есть сайт, где можно вставить ссылку на профиль и не надо будет думать: [shikimori-stat.ivanik.ru](https://shikimori-stat.ivanik.ru/)*.
+
+Если вы все же решили сделать всё руками, картинку можно получить по ссылке:
 
 ```
-https://big.ivanik.ru/shikimori/stat.svg?user=428722&blankcolor=434343&mincolor=245652&maxcolor=009688&textcolor=ffffff
+https://shikimori-stat-api.ivanik.ru/stat.svg?user=ivanik&blankcolor=bebebe&mincolor=79a9cf&maxcolor=79a9cf&textcolor=000000
 ```
 
 Параметры:
 
 | Параметр     | Значение                                |
 | ------------ | --------------------------------------- |
-| `type`       | Тип картинки. SVG или PNG               |
-| `user`       | ID пользователя                         |
+| `user`       | ID или ник пользователя                         |
 | `blankcolor` | Цвет пустых клеток                      |
 | `mincolor`   | Цвет клеток при минимальной активности  |
 | `maxcolor`   | Цвет клеток при максимальной активности |
 | `textcolor`  | Цвет текста                             |
 
 Все цвета передаются в HEX формате без решетки, например `textcolor=ffffff`
+
+Доступные форматы `.svg` и `.png`.
+
+В поле `user` можно передать ник из ссылки профиля на шикимори или id пользователя
 
 ## Вставка на Shikimori
 
@@ -39,7 +44,7 @@ https://big.ivanik.ru/shikimori/stat.svg?user=428722&blankcolor=434343&mincolor=
 
 ```bbcode
 [poster]
-https://ivanik.ru/shikimori-stat?user=428722&blankcolor=434343&mincolor=245652&maxcolor=009688&textcolor=ffffff
+https://shikimori-stat-api.ivanik.ru/stat.svg?user=ivanik&blankcolor=bebebe&mincolor=79a9cf&maxcolor=79a9cf&textcolor=000000
 [/poster]
 ```
 
@@ -47,21 +52,20 @@ https://ivanik.ru/shikimori-stat?user=428722&blankcolor=434343&mincolor=245652&m
 
 ```bbcode
 [img 875x128]
-https://ivanik.ru/shikimori-stat?user=428722&blankcolor=434343&mincolor=245652&maxcolor=009688&textcolor=ffffff
+https://shikimori-stat-api.ivanik.ru/stat.svg?user=ivanik&blankcolor=bebebe&mincolor=79a9cf&maxcolor=79a9cf&textcolor=000000
 [/img]
-```
-
-## Получение ID пользователя
-
-ID пользователя можно получить из ссылки на аватарку в названии файла.
-
-Например в этой ссылке ID 428722.
-
-```
-https://moe.shikimori.one/system/users/x160/428722.png
-                                            ^^^^^^
 ```
 
 ## Разработка
 
-библеотека`canvas` может просто так не собраться. Нужно будет поставить пакеты из таблички <https://www.npmjs.com/package/canvas>
+Основной код написан мной, когда я ещё не умел красиво программировать. Сорри.
+
+```
+npm ci
+npm run build
+npm run start
+```
+
+Библиотека `canvas` может просто так не собраться. Нужно будет поставить пакеты из таблички <https://www.npmjs.com/package/canvas>
+
+Для прода собираю докер, см. паплайн github ci
